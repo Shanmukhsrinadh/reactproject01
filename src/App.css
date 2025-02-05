@@ -1,0 +1,51 @@
+/* Basic styles for the app layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1; /* Ensures the main content takes up available space */
+  padding: 20px;
+}
+
+footer {
+  padding: 20px;
+  background-color: #f1f1f1;
+}
+
+.sidebar-open .main-content {
+  margin-left: 250px; /* Adjust this value to the width of your sidebar */
+}
+
+/* Styling for sidebar when it's open (if applicable) */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Initially offscreen */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  color: #fff;
+  transition: left 0.3s ease;
+}
+
+.sidebar-open .sidebar {
+  left: 0; /* Sidebar is visible when it's open */
+}
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+  height: 100%;
+  }
+}
