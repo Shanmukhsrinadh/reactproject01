@@ -139,13 +139,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     boxSizing: 'border-box',
     ...(open
       ? {
-          ...openedMixin(theme),
-          '& .MuiDrawer-paper': openedMixin(theme),
-        }
+        ...openedMixin(theme),
+        '& .MuiDrawer-paper': openedMixin(theme),
+      }
       : {
-          ...closedMixin(theme),
-          '& .MuiDrawer-paper': closedMixin(theme),
-        }),
+        ...closedMixin(theme),
+        '& .MuiDrawer-paper': closedMixin(theme),
+      }),
   })
 );
 
@@ -200,99 +200,142 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ marginRight: 5, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Pack.com
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {[{ text: 'Products', icon: <StorefrontIcon /> },
-            { text: 'Orders', icon: <ShoppingCartIcon /> },
-            { text: 'Categories', icon: <CategoryIcon />, expandable: true },
-            { text: 'Customers', icon: <PeopleIcon /> },
-            { text: 'Contact us', icon: <ContactPhoneIcon/> }].map(({ text, icon, expandable }) => (
-            <div key={text}>
-              <ListItem disablePadding>
-                <ListItemButton onClick={expandable ? handleCategoryClick : undefined}>
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-              {text === 'Categories' && openCategories && (
-                <List component="div" disablePadding sx={{ pl: 4 }}>
-                  {['Men', 'Women', 'Kids'].map((category) => (
-                    <div key={category}>
-                      <ListItem disablePadding>
-                        <ListItemButton onClick={() => handleSubcategoryClick(category)}>
-                          <ListItemIcon><CategoryIcon /></ListItemIcon>
-                          <ListItemText primary={category} sx={{ opacity: open ? 1 : 0 }} />
-                        </ListItemButton>
-                      </ListItem>
-                      {openSubcategories[category] && (
-                        <List component="div" disablePadding sx={{ pl: 4 }}>
-                          {['Shirts', 'Pants', 'Footwear', 'Wearables'].map((subcategory) => (
-                            <ListItem key={subcategory} disablePadding>
-                              <ListItemButton>
-                                <ListItemText primary={subcategory} sx={{ opacity: open ? 1 : 0 }} />
-                              </ListItemButton>
-                            </ListItem>
-                          ))}
-                        </List>
-                      )}
-                    </div>
-                  ))}
-                </List>
-              )}
-            </div>
-          ))}
-        </List>
-      </Drawer>
+   <Box sx={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
+  <CssBaseline />
+  <AppBar position="fixed" open={open} sx={{ backgroundColor: '#212121' }}>
+    <Toolbar>
+      <IconButton
+        color="inherit"
+        onClick={handleDrawerOpen}
+        edge="start"
+        sx={{ marginRight: 2, ...(open && { display: 'none' }) }}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Typography variant="h6" noWrap sx={{ fontWeight: 'bold' }}>
+        Pack.com
+      </Typography>
+    </Toolbar>
+  </AppBar>
 
-      {/* Main Content Area */}
-      <MainContent open={open}>
-        {/* Replaced Carousel with your new version */}
-        <ControlledCarousel />
+  <Drawer variant="permanent" open={open} sx={{ width: open ? 240 : 80, transition: 'width 0.3s' }}>
+    <DrawerHeader>
+      <IconButton onClick={handleDrawerClose}>
+        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+      </IconButton>
+    </DrawerHeader>
+    <Divider />
+    <List>
+      {[
+        { text: 'Products', icon: <StorefrontIcon /> },
+        { text: 'Orders', icon: <ShoppingCartIcon /> },
+        { text: 'Categories', icon: <CategoryIcon />, expandable: true },
+        { text: 'Customers', icon: <PeopleIcon /> },
+        { text: 'Contact us', icon: <ContactPhoneIcon /> },
+      ].map(({ text, icon, expandable }) => (
+        <div key={text}>
+          <ListItem disablePadding>
+            <ListItemButton onClick={expandable ? handleCategoryClick : undefined}>
+              <ListItemIcon sx={{ color: '#555' }}>{icon}</ListItemIcon>
+              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0, fontWeight: 'bold' }} />
+            </ListItemButton>
+          </ListItem>
+          {text === 'Categories' && openCategories && (
+            <List component="div" disablePadding sx={{ pl: 4 }}>
+              {['Men', 'Women', 'Kids'].map((category) => (
+                <div key={category}>
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={() => handleSubcategoryClick(category)}>
+                      <ListItemIcon><CategoryIcon /></ListItemIcon>
+                      <ListItemText primary={category} sx={{ opacity: open ? 1 : 0, fontWeight: '500' }} />
+                    </ListItemButton>
+                  </ListItem>
+                  {openSubcategories[category] && (
+                    <List component="div" disablePadding sx={{ pl: 4 }}>
+                      {['Shirts', 'Pants', 'Footwear', 'Wearables'].map((subcategory) => (
+                        <ListItem key={subcategory} disablePadding>
+                          <ListItemButton>
+                            <ListItemText primary={subcategory} sx={{ opacity: open ? 1 : 0, color: '#777' }} />
+                          </ListItemButton>
+                        </ListItem>
+                      ))}
+                    </List>
+                  )}
+                </div>
+              ))}
+            </List>
+          )}
+        </div>
+      ))}
+    </List>
+  </Drawer>
 
-        <Typography variant="h5" gutterBottom>
-          All Products
-        </Typography>
-        {allproducts.length === 0 ? (
-          <Typography>No products available.</Typography>
-        ) : (
-          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 2 }}>
-            {allproducts.map((product) => (
-              <Box key={product.id} sx={{ border: '1px solid #ccc', padding: 2 }}>
-                <img src={product.url} alt={product.title} style={{ width: '100%', height: 'auto' }} />
-                <Typography variant="h6">{product.title}</Typography>
-                <Typography variant="body2">Price: ₹{product.price}</Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                  <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
-                  <button onClick={() => handleViewProduct(product)}>View Product</button>
-                </Box>
-              </Box>
-            ))}
-          </Box>
-        )}
-      </MainContent>
+  {/* Main Content */}
+  <MainContent open={open} sx={{ flexGrow: 1, padding: 3 }}>
+    <ControlledCarousel />
+
+    <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mt: 3 , color: 'black' }}>
+      All Products
+    </Typography>
+    
+    {allproducts.length === 0 ? (
+      <Typography sx={{ textAlign: 'center', color: '#777', fontSize: '1.1rem' }}>
+        No products available.
+      </Typography>
+    ) : (
+<Box
+  sx={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gap: 3,
+    mt: 2,
+    color: '#777'
+  }}
+>
+  {allproducts.map((product) => (
+    <Box
+      key={product.id}
+      sx={{
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        transition: 'transform 0.2s',
+        '&:hover': { transform: 'scale(1.02)' },
+        padding: 2,
+        display: 'flex',
+        flexDirection: 'column',  // Ensures content stacks vertically
+        height: '100%',           // Ensures all cards have the same height
+      }}
+    >
+      <img
+        src={product.url}
+        alt={product.title}
+        style={{ width: '100%', height: 'auto', borderRadius: '6px' }}
+      />
+      <Typography variant="h6" sx={{ mt: 1, fontWeight: 'bold' }}>
+        {product.title}
+      </Typography>
+      <Typography variant="body2" sx={{ color: '#777', mb: 2 }}>
+        Price: ₹{product.price}
+      </Typography>
+
+      {/* This pushes buttons to the bottom for uniform placement */}
+      <Box sx={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between' }}>
+        <button className="btn btn-dark btn-sm me-2" onClick={() => handleAddToCart(product)}>
+          Add to Cart
+        </button>
+        <button className="btn btn-outline-dark btn-sm" onClick={() => handleViewProduct(product)}>
+          View Product
+        </button>
+      </Box>
     </Box>
+  ))}
+</Box>
+
+    )}
+  </MainContent>
+</Box>
+
   );
 }
