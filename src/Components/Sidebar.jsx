@@ -21,7 +21,66 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
 import ReportIcon from '@mui/icons-material/Report';
-import products from '../Data/products';  // Correct import for default export
+import { Allproducts } from '../Data/Allproducts';
+import Carousel from 'react-bootstrap/Carousel';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+function ControlledCarousel() {
+  const [index, setIndex] = React.useState(0);
+
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
+  };
+
+  const carouselStyle = {
+    height: '360px',
+    objectFit: 'cover',
+    marginTop: '30px',
+    // backgroundsize: 'cover',
+  };
+
+  return (
+    <Carousel activeIndex={index} onSelect={handleSelect} controls={false}> {/* Disable default controls */}
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://mobirise.com/extensions/commercem4/assets/images/3.jpg"
+          alt="First slide"
+          style={carouselStyle}
+        />
+        <Carousel.Caption>
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://mobirise.com/extensions/commercem4/assets/images/gallery04.jpg"
+          alt="Second slide"
+          style={carouselStyle}
+        />
+        <Carousel.Caption>
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="https://i.ibb.co/0jTTkV9m/steptodown-com277524.jpg"
+          alt="Third slide"
+          style={carouselStyle}
+        />
+        <Carousel.Caption>
+          <h3>Third slide label</h3>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+  );
+}
+
 
 
 const drawerWidth = 240;
@@ -100,9 +159,12 @@ const MainContent = styled('main', { shouldForwardProp: (prop) => prop !== 'open
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: 0,
-    ...(theme.breakpoints.up('sm') && {
+    [theme.breakpoints.up('sm')]: {
       marginLeft: drawerWidth,
-    }),
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 0,
+    },
   })
 );
 
@@ -126,19 +188,23 @@ export default function MiniDrawer() {
     }));
   };
 
-  // Here, display all products
-  const allProducts = products;  // Get all products without filtering by category
+  const allproducts = Allproducts;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton color="inherit" onClick={handleDrawerOpen} edge="start" sx={{ marginRight: 5, ...(open && { display: 'none' }) }}>
+          <IconButton
+            color="inherit"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ marginRight: 5, ...(open && { display: 'none' }) }}
+          >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            E-Commerce Dashboard
+            Pack.com
           </Typography>
         </Toolbar>
       </AppBar>
@@ -194,18 +260,21 @@ export default function MiniDrawer() {
 
       {/* Main Content Area */}
       <MainContent open={open}>
+        {/* Replaced Carousel with your new version */}
+        <ControlledCarousel />
+
         <Typography variant="h5" gutterBottom>
           All Products
         </Typography>
-        {allProducts.length === 0 ? (
+        {allproducts.length === 0 ? (
           <Typography>No products available.</Typography>
         ) : (
-          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
-            {allProducts.map((product) => (
+          <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 2 }}>
+            {allproducts.map((product) => (
               <Box key={product.id} sx={{ border: '1px solid #ccc', padding: 2 }}>
-                <img src={product.image} alt={product.title} style={{ width: '100%', height: 'auto' }} />
+                <img src={product.url} alt={product.title} style={{ width: '100%', height: 'auto' }} />
                 <Typography variant="h6">{product.title}</Typography>
-                <Typography variant="body2">Price: ${product.price}</Typography>
+                <Typography variant="body2">Price: ₹{product.price}</Typography>
               </Box>
             ))}
           </Box>
