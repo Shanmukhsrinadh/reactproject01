@@ -20,7 +20,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
-import ReportIcon from '@mui/icons-material/Report';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import { Allproducts } from '../Data/Allproducts';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,11 +36,10 @@ function ControlledCarousel() {
     height: '360px',
     objectFit: 'cover',
     marginTop: '30px',
-    // backgroundsize: 'cover',
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect} controls={false}> {/* Disable default controls */}
+    <Carousel activeIndex={index} onSelect={handleSelect} controls={false}>
       <Carousel.Item>
         <img
           className="d-block w-100"
@@ -81,8 +80,6 @@ function ControlledCarousel() {
   );
 }
 
-
-
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -122,6 +119,7 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#00796b',  // Change this to your desired color
   ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
@@ -131,6 +129,7 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
+
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -160,7 +159,7 @@ const MainContent = styled('main', { shouldForwardProp: (prop) => prop !== 'open
     }),
     marginLeft: 0,
     [theme.breakpoints.up('sm')]: {
-      marginLeft: drawerWidth,
+      // marginLeft: drawerWidth,
     },
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
@@ -189,6 +188,16 @@ export default function MiniDrawer() {
   };
 
   const allproducts = Allproducts;
+
+  const handleAddToCart = (product) => {
+    console.log(`Added ${product.title} to the cart.`);
+    // Logic to add the product to the cart
+  };
+
+  const handleViewProduct = (product) => {
+    console.log(`Viewing product: ${product.title}`);
+    // Logic to navigate to the product details page
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -220,7 +229,7 @@ export default function MiniDrawer() {
             { text: 'Orders', icon: <ShoppingCartIcon /> },
             { text: 'Categories', icon: <CategoryIcon />, expandable: true },
             { text: 'Customers', icon: <PeopleIcon /> },
-            { text: 'Reports', icon: <ReportIcon /> }].map(({ text, icon, expandable }) => (
+            { text: 'Contact us', icon: <ContactPhoneIcon/> }].map(({ text, icon, expandable }) => (
             <div key={text}>
               <ListItem disablePadding>
                 <ListItemButton onClick={expandable ? handleCategoryClick : undefined}>
@@ -275,6 +284,10 @@ export default function MiniDrawer() {
                 <img src={product.url} alt={product.title} style={{ width: '100%', height: 'auto' }} />
                 <Typography variant="h6">{product.title}</Typography>
                 <Typography variant="body2">Price: ₹{product.price}</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                  <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                  <button onClick={() => handleViewProduct(product)}>View Product</button>
+                </Box>
               </Box>
             ))}
           </Box>
