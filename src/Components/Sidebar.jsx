@@ -69,7 +69,7 @@ function ControlledCarousel() {
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src="https://i.ibb.co/0jTTkV9m/steptodown-com277524.jpg"
+          src="https://luxurywatchesusa.com/wp-content/uploads/2021/02/buy-watches-luxury-watches-usa.jpg"
           alt="Third slide"
           style={carouselStyle}
         />
@@ -185,7 +185,7 @@ export default function MiniDrawer() {
   const [activeSection, setActiveSection] = React.useState('Products');
   const [orderPlaced, setOrderPlaced] = React.useState(false); // For order confirmation popup
 
-  // Save cart to localStorage whenever it changes
+
   React.useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
@@ -218,7 +218,7 @@ export default function MiniDrawer() {
 
   const handleViewProduct = (product) => {
     console.log(`Viewing product: ${product.title}`);
-    // Logic to navigate to the product details page
+
   };
 
   const handleSectionChange = (section) => {
@@ -349,7 +349,7 @@ export default function MiniDrawer() {
                       style={{ width: '100%', height: 'auto', borderRadius: '6px' }}
                     />
                     <Typography variant="h6" sx={{ mt: 1, fontWeight: 'bold' }}>
-                      {product.title}
+                      {product.brand}
                     </Typography>
                     <Typography variant="body2" sx={{ color: '#777', mb: 2 }}>
                       Price: ₹{product.price}
