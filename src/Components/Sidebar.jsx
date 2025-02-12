@@ -26,6 +26,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom';
 
 function ControlledCarousel() {
   const [index, setIndex] = React.useState(0);
@@ -184,7 +185,7 @@ export default function MiniDrawer() {
   });
   const [activeSection, setActiveSection] = React.useState('Products');
   const [orderPlaced, setOrderPlaced] = React.useState(false); // For order confirmation popup
-
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -217,8 +218,7 @@ export default function MiniDrawer() {
   };
 
   const handleViewProduct = (product) => {
-    console.log(`Viewing product: ${product.title}`);
-
+    navigate(`/product/${product.id}`);
   };
 
   const handleSectionChange = (section) => {
@@ -352,7 +352,7 @@ export default function MiniDrawer() {
                       {product.brand}
                     </Typography>
                     <Typography variant="body2" sx={{ color: '#777', mb: 2 }}>
-                      Price: ₹{product.price}
+                    <p>Price: <strong style={{ color: 'black' }}>₹{product.price}</strong></p>
                     </Typography>
                     <Box sx={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between' }}>
                       <button

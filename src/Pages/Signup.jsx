@@ -102,7 +102,7 @@ function Signup() {
                                 </div>
                                 {/* <Link to='/Login'> */}
                                     <MDBBtn className="w-100 mb-4" size="md" type="submit">
-                                        Log In
+                                        Sign up
                                     </MDBBtn>
                                 {/* </Link> */}
 
